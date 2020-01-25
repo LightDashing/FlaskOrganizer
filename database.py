@@ -3,9 +3,9 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.ext.declarative import  declarative_base
 from sqlalchemy.orm import Session, relationship
 import datetime
-import sqlalchemy.ext.IntegrityError
+from psycopg2.errors import UniqueViolation
+from sqlalchemy.exc import IntegrityError
 
-engine = create_engine('postgresql://postgres:***REMOVED***@localhost/postgres', echo=True)
 Base = declarative_base()
 
 class User(Base):
@@ -34,22 +34,26 @@ class DBWork:
 
     def __init__(self):
         self.engine = create_engine('postgresql://postgres:***REMOVED***@localhost/postgres', echo=True)
-        self.session = Session(bind=engine)
+        self.session = Session(bind=self.engine)
 
     def close(self):
         self.session.close()
 
     def user_add(self, username, email, password):
         self.session.add(User(username=username, email=email, password=password))
+        try:
+            self.session.commit()
+            return True
+        except (UniqueViolation, IntegrityError):
+            return False
 
     def commit(self):
         self.session.commit()
 
-
-Base.metadata.create_all(engine)
-session = Session(bind=engine)
-#session.add(User(username='LightDashing', email='chugunnic@gmal.com', password='rjombabomba'))
-#session.commit()
-response = session.query(User).all()
-print(response[0].username)
-session.close()
+    def user_login(self, email, password):
+        email = self.session.query(User).filter(User.email==email).all()
+        password = self.session.query(User).filter(User.password==password).all()
+        if email and password:
+            return True
+        else:
+            return False
