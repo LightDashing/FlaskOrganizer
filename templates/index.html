@@ -38,7 +38,7 @@
             height: 110px;
         }
 
-        .Text {
+        .Title {
             font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
             position: fixed;
             top: 40%;
@@ -54,7 +54,21 @@
             left: 58%;
             text-align: center;
             color: red;
-            text-shadow: 2px 4px 2px #b0b0b0, 0 0 1em red;
+            text-shadow: 2px 4px 2px #b0b0b0, 0 0 1em black;
+        }
+
+        .Login {
+            position: fixed;
+            top: 69%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(120%);
+        }
+
+        .Redirect {
+            position: fixed;
+            top: 72%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(125%);
         }
 
         body {
@@ -66,7 +80,7 @@
     </style>
 </head>
 <body>
-<div class="Text"><h1>Register now!</h1></div>
+<div class="Title"><h1>Sign in</h1></div>
 <form method="POST">
     <div class="SignIn">
         <div>
@@ -95,5 +109,11 @@
     <h2>Username or user already exist!</h2>
     {% endif %}</div>
 </form>
+<div class="Login">
+    Or you can
+</div>
+<div class="Redirect">
+    <a href="/login">Login</a>
+</div>
 </body>
 </html>

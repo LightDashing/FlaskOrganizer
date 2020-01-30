@@ -2,15 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ёпташлёптер</title>
+    <title>User</title>
     <style>
         body {
-            background: linear-gradient(to bottom, #CEC123 0%, #A4A323 52%, #C57B2C 100%);
+            background: #66c6bb;
+            background-image: url(/static/img/background.jpg);
             background-repeat: no-repeat;
+            background-position: -10vh 20vh;
         }
     </style>
 </head>
 <body>
-    <center><h1><font face="Comic Sans MS" size="250" color="#87ceeb">Ну, дарова типо</font></h1></center>
+{% if name != session['username'] %}
+<p>Sorry, seems like somthing go wrong</p>
+<a href={{url_for('index')}}>Home</a>
+{% else %}
+<center><h1><font face="Comic Sans MS" size="250" color="#873eeb">Привет {{name|title}}!</font></h1></center>
+<a href={{url_for('logout')}}>Log out</a>
+{% endif %}
+<form method="POST">
+    <div>
+        <label>Title</label>
+        <input type="text" minlength="2" maxlength="20" placeholder="(2-20 symbols)" name="title" required>
+    </div>
+    <div>
+        <label>Desctiption</label>
+        <textarea placeholder="add some details (optional)" name="description" rows="4"></textarea>
+    </div>
+    <div>
+        <label>Deadline (optional)</label>
+        <input type="date" name="end_date">
+    </div>
+    <input type="submit" value="Send">
+</form>
 </body>
 </html>
+<!--TODO: Make some design for user page-->
