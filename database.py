@@ -45,15 +45,31 @@ class DBWork:
             self.session.commit()
             return True
         except (UniqueViolation, IntegrityError):
+            self.close()
             return False
 
     def commit(self):
         self.session.commit()
 
+
     def user_login(self, email, password):
-        email = self.session.query(User).filter(User.email==email).all()
-        password = self.session.query(User).filter(User.password==password).all()
-        if email and password:
+        user = self.session.query(User).filter(User.email==email, User.password==password).all()
+        if user:
             return True
         else:
             return False
+
+    def get_user_nickname(self, email):
+        user = self.session.query(User).filter(User.email==email).first()
+        if user:
+            return user[0].username
+        else:
+            return False
+
+    def task_add(self, title, description, deadline, user_id):
+        self.session.add(Task(title=title, description=description, end_date=deadline, user_id=user_id))
+        self.commit()
+
+    def get_user_data(self, username):
+        user = self.session.query(User).filter(User.username==username).first()
+        return user

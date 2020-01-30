@@ -3,10 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <style>
+        .LogIn {
+            background: #A6E3DC;
+            border-radius: 20px;
+            font-family: "Ubuntu";
+            vertical-align: middle;
+            line-height: 35px;
+            text-align: center;
+            position: fixed;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(110%);
+            box-shadow: 4px 4px 15px 1px black;
+            width: 238px;
+            height: 110px;
+        }
+
+        .SubmitButt {
+            border-radius: 20px;
+            position: fixed;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(110%);
+            background: #A6E3DC;
+        }
+
+        .SubmitButt:hover {
+            border-radius: 20px;
+            position: fixed;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(110%);
+            background: #5F958F;
+        }
+
+        .Message {
+            font-family: "Ubuntu";
+            position: fixed;
+            top: 49%;
+            left: 58%;
+            text-align: center;
+            color: red;
+            text-shadow: 2px 4px 2px #b0b0b0, 0 0 1em black;
+        }
+
+        .Text {
+            font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: 2px 4px 2px #b0b0b0, 0 0 1em black;
+        }
+
+        .SignIn {
+            position: fixed;
+            top: 69%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(120%);
+        }
+
+        .Redirect {
+            position: fixed;
+            top: 72%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(125%);
+        }
+
+        body {
+            background: #66c6bb;
+            background-image: url(/static/img/background.jpg);
+            background-repeat: no-repeat;
+            background-position: -10vh 20vh;
+        }
+    </style>
 </head>
 <body>
+<div class="Text"><h1>Login</h1></div>
 <form method="POST">
-        <div>
+    <div class="LogIn">
+        <div style="padding-left: 20px;">
             <label>E-mail</label>
             <input type="email" placeholder="enter valid email" name="email" required>
         </div>
@@ -18,7 +95,21 @@
             <label>Remember me</label>
             <input type="checkbox" name="remember">
         </div>
-        <input type="submit" value="ОТПРАВИТЬ">
-    </form>
+    </div>
+    <div class="SubmitButt">
+        <input class="SubmitButt" type="submit" value="Send">
+    </div>
+    <div class="Message">
+        {% if error == 'dont_match' %}
+        <h2>Email or password is incorrect!</h2>
+        {% endif %}
+    </div>
+</form>
+<div class="SignIn">
+    Or you can
+</div>
+<div class="Redirect">
+    <a href="/">Sign in</a>
+</div>
 </body>
 </html>
