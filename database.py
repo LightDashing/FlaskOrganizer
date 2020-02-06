@@ -16,12 +16,12 @@ class User(Base):
     password = Column(VARCHAR(512), nullable=False)
     registration_date = Column(Text, nullable=False, default=datetime.date.today().isoformat())
 
-    user_tasks = relationship("Task")
+    user_tasks = relationship("Task", cascade="all, delete-orphan")
 
 class Task(Base):
     __tablename__ = 'tasks'
     id = Column(INTEGER, primary_key=True)
-    user_id = Column(INTEGER, ForeignKey('users.id'), nullable=False)
+    user_id = Column(INTEGER, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     title = Column(VARCHAR(30), nullable=False)
     description = Column(Text)
     status = Column(Boolean, nullable=False, default=False)
@@ -29,6 +29,9 @@ class Task(Base):
     end_date = Column(Text)
 
     user = relationship(User)
+
+#engine= create_engine('postgresql://postgres:***REMOVED***@localhost/postgres')
+#Base.metadata.create_all(engine)
 
 class DBWork:
 
@@ -62,7 +65,7 @@ class DBWork:
     def get_user_nickname(self, email):
         user = self.session.query(User).filter(User.email==email).first()
         if user:
-            return user[0].username
+            return user.username
         else:
             return False
 
@@ -70,6 +73,25 @@ class DBWork:
         self.session.add(Task(title=title, description=description, end_date=deadline, user_id=user_id))
         self.commit()
 
+    def tasks_get(self, name):
+        tasks = self.session.query(Task).filter(Task.user_id==self.get_user_data(name).id).all()
+        return tasks
+
+    def task_delete(self, task_id, name):
+        user = self.session.query(User).filter(User.id==self.get_user_data(name).id).first()
+        user.user_tasks.pop(int(task_id)-1)
+        self.commit()
+        return True
+
     def get_user_data(self, username):
         user = self.session.query(User).filter(User.username==username).first()
         return user
+
+    def task_chstatus(self, task_id, name):
+        user = self.session.query(User).filter(User.id==self.get_user_data(name).id).first()
+        if not user.user_tasks[int(task_id)-1].status:
+            user.user_tasks[int(task_id) - 1].status = True
+        else:
+            user.user_tasks[int(task_id) - 1].status = False
+        self.commit()
+        return True

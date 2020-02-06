@@ -3,81 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <style>
-        .SubmitButt {
-            border-radius: 20px;
-            position: fixed;
-            top: 65%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(110%);
-            background: #A6E3DC;
-        }
-
-        .SubmitButt:hover {
-            border-radius: 20px;
-            position: fixed;
-            top: 65%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(110%);
-            background: #5F958F;
-        }
-
-        .SignIn {
-            background: #A6E3DC;
-            border-radius: 20px;
-            font-family: "Ubuntu";
-            vertical-align: middle;
-            line-height: 27px;
-            text-align: center;
-            position: fixed;
-            top: 55%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(110%);
-            box-shadow: 4px 4px 15px 1px black;
-            width: 238px;
-            height: 110px;
-        }
-
-        .Title {
-            font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
-            position: fixed;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-shadow: 2px 4px 2px #b0b0b0, 0 0 1em black;
-        }
-
-        .Message {
-            font-family: "Ubuntu";
-            position: fixed;
-            top: 49%;
-            left: 58%;
-            text-align: center;
-            color: red;
-            text-shadow: 2px 4px 2px #b0b0b0, 0 0 1em black;
-        }
-
-        .Login {
-            position: fixed;
-            top: 69%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(120%);
-        }
-
-        .Redirect {
-            position: fixed;
-            top: 72%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(125%);
-        }
-
-        body {
-            background: #66c6bb;
-            background-image: url(/static/img/background.jpg);
-            background-repeat: no-repeat;
-            background-position: -10vh 20vh;
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 <div class="Title"><h1>Sign in</h1></div>
@@ -85,29 +11,30 @@
     <div class="SignIn">
         <div>
             <label>Username</label>
-            <input type='text' minlength="5" placeholder="5+ symbols" name="username" required>
+            <input type='text' minlength="5" maxlength="30" placeholder="5+ symbols" name="username" required>
         </div>
         <div style="padding-left: 22px;">
             <label>E-mail</label>
-            <input type="email" placeholder="enter valid email" name="email" required>
+            <input type="email" maxlength="30" placeholder="enter valid email" name="email" required>
         </div>
         <div style="padding-left: 3px;">
             <label>Password</label>
-            <input type="password" minlength="6" placeholder="6+ symbols" name="pw1" required>
+            <input type="password" minlength="6" maxlength="20" placeholder="6+ symbols" name="pw1" required>
         </div>
         <div style="padding-left: 3px;">
             <label>Password</label>
-            <input type="password" minlength="6" placeholder="6+ symbols" name="pw2" required>
+            <input type="password" minlength="6" maxlength="20" placeholder="6+ symbols" name="pw2" required>
         </div>
     </div>
     <div class="SubmitButt">
         <input class="SubmitButt" type="submit" value="Send">
     </div>
     <div class="Message">{% if error == 'passwords_dont_match' %}
-    <h2>Passwords aren't equal!</h2>
-    {% elif error == 'already_exist' %}
-    <h2>Username or user already exist!</h2>
-    {% endif %}</div>
+        <h2>Passwords aren't equal!</h2>
+        {% elif error == 'already_exist' %}
+        <h2>Username or user already exist!</h2>
+        {% endif %}
+    </div>
 </form>
 <div class="Login">
     Or you can
