@@ -1,0 +1,92 @@
+.CreateTask {
+    border-radius: 4vh;
+    position: fixed;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%) scale(145%);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 3.1vh;
+    background: #A6E3DC;
+    width: 15%;
+    height: 20%;
+    font-family: 'Rubik', sans-serif;
+}
+
+.SubmitButt {
+    border-radius: 20px;
+    position: fixed;
+    top: 110%;
+    left: 54%;
+    transform: translate(-50%, -50%) scale(100%);
+    background: #A6E3DC;
+}
+
+.TasksWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.Card {
+    border-radius: 20px;
+    width: 240px;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+    background: rgba(79, 255, 247, 0.5);
+}
+
+.Card-Img {
+    height: 180px;
+    background: url("/static/img/motivation-png-6.png");
+    background-size: cover;
+}
+
+.Card-Title {
+
+}
+
+.Card-Details {
+
+}
+
+.Card-Buttons {
+
+}
+
+.Card-Start {
+
+}
+
+.Card-End{
+
+}
+
+.Logout {
+    border-radius: 20px;
+    width: 70px;
+    height: 23px;
+    font-family: 'Rubik', sans-serif;
+    position: fixed;
+    top: 80%;
+    left: 81%;
+    transform: translate(-50%, -50%) scale(120%);
+    background: #A6E3DC;
+    text-align: center;
+}
+
+textarea{
+    width: 80%;
+}
+
+text {
+    width: 100%;
+}
+
+body {
+    background: #66c6bb;
+    background-image: url(/static/img/background.jpg);
+    background-repeat: no-repeat;
+    background-position: -10vh 20vh;
+}

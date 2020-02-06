@@ -21,19 +21,21 @@ def index():
             db.close()
             return render_template('index.html', error='already_exist')
         db.close()
+        session['username'] = name
         return redirect(url_for('users_page', name=name))
 
 
 @app.route('/users/<name>', methods=['GET', 'POST'])
 def users_page(name):
+    db = DBWork()
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['description']
         end_date = request.form['end_date']
-        db = DBWork()
         db.task_add(title=title, description=content, deadline=end_date, user_id=db.get_user_data(name).id)
-        db.close()
-    return render_template('user.html', name=name)
+    user_tasks = db.tasks_get(name)
+    db.close()
+    return render_template('user.html', name=name, tasks=user_tasks)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -41,7 +43,6 @@ def login():
         email = request.form['email']
         password = request.form['pw1']
         db = DBWork()
-        user = db.user_login(email, password)
         if not db.user_login(email, password):
             db.close()
             return render_template('login.html', error='dont_match')
@@ -56,5 +57,19 @@ def login():
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
+
+@app.route('/delete/task_<task_id>')
+def delete_task(task_id):
+    db = DBWork()
+    db.task_delete(int(task_id), session['username'])
+    db.close()
+    return redirect(url_for('users_page', name=session['username']))
+
+@app.route('/complete/task_<task_id>')
+def complete_task(task_id):
+    db = DBWork()
+    db.task_chstatus(int(task_id), session['username'])
+    db.close()
+    return redirect(url_for('users_page', name=session['username']))
 
 app.run(debug=True)

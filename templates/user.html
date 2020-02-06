@@ -3,38 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>User</title>
-    <style>
-        body {
-            background: #66c6bb;
-            background-image: url(/static/img/background.jpg);
-            background-repeat: no-repeat;
-            background-position: -10vh 20vh;
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" href="/static/css/userpage.css">
 </head>
 <body>
 {% if name != session['username'] %}
 <p>Sorry, seems like somthing go wrong</p>
 <a href={{url_for('index')}}>Home</a>
 {% else %}
-<center><h1><font face="Comic Sans MS" size="250" color="#873eeb">Привет {{name|title}}!</font></h1></center>
-<a href={{url_for('logout')}}>Log out</a>
-{% endif %}
+<center><h1><font size="250" color="#873eeb">Привет {{name|title}}!</font></h1></center>
+<div class="Logout"><a href={{url_for('logout')}}>Log out</a></div>
+<div class="TasksWrapper">
+    {% for task in tasks %}
+    <div class="Card">
+        <div class="Card-Img"></div>
+        <div class="Card-Title">{{ task.title }}</div>
+        <div class="Card-Details">{{task.description}}</div>
+        <div class="Card-Start">Created: {{ task.start_date }}</div>
+        {% if task.end_date %}
+        <div class="Card-End">Deadline: {{ task.end_date }}</div>
+        {% endif %}
+        <div class="Card-Buttons">
+            <a href={{"/delete/task_" + loop.index|string}}><img src="/static/img/delete.png"
+                                                                 style="width: 1vw; height: 2vh;"></a>
+            <a href={{"/complete/task_" + loop.index|string}}><img src="/static/img/status.png"
+                                                                   style="width: 1vw; height: 2vh;"></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 <form method="POST">
-    <div>
-        <label>Title</label>
-        <input type="text" minlength="2" maxlength="20" placeholder="(2-20 symbols)" name="title" required>
+    <div class="CreateTask">
+        <div>
+            <label>Title</label>
+            <input type="text" minlength="2" maxlength="20" placeholder="(2-20 symbols)" name="title" required>
+        </div>
+        <div>
+            <label>Desctiption</label>
+            <textarea placeholder="add some details (optional)" name="description" rows="4"></textarea>
+        </div>
+        <div>
+            <label>Deadline (optional)</label>
+            <input type="date" name="end_date">
+        </div>
+        <div class="SubmitButt">
+            <input class="SubmitButt" type="submit" value="Create"></div>
     </div>
-    <div>
-        <label>Desctiption</label>
-        <textarea placeholder="add some details (optional)" name="description" rows="4"></textarea>
-    </div>
-    <div>
-        <label>Deadline (optional)</label>
-        <input type="date" name="end_date">
-    </div>
-    <input type="submit" value="Send">
 </form>
+{% endif %}
 </body>
 </html>
 <!--TODO: Make some design for user page-->
