@@ -1,0 +1,33 @@
+body {
+    padding: 0;
+    margin: 0;
+    background: #fafbfd;
+    background-image: url(/static/img/background.png);
+    background-repeat: no-repeat;
+    background-position: -10vh 20vh;
+}
+
+.send-field {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    width: 20vw;
+    padding: 2vh;
+    border-radius: 10vh;
+    font-family: 'Rubik', sans-serif;
+    font-weight: bolder;
+    box-shadow: 4px 4px 0px 0px gray;;
+}
+
+.title {
+    position: fixed;
+    left: 45vw;
+    top: 40vh;
+    font-family: 'Rubik', sans-serif;
+    font-weight: bolder;
+}
