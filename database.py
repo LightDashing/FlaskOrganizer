@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session, relationship
 import datetime
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
+import hashlib
 
 Base = declarative_base()
 
@@ -38,12 +39,16 @@ class DBWork:
     def __init__(self):
         self.engine = create_engine('postgresql://postgres:***REMOVED***@localhost/postgres', echo=True)
         self.session = Session(bind=self.engine)
+        self.secret = hashlib.new('md5', 'Lehalepeha'.encode('utf-16le')).hexdigest()
+
+    def password_crypter(self, password):
+        return hashlib.new('md5', (password + self.secret).encode('utf-16le')).hexdigest()
 
     def close(self):
         self.session.close()
 
     def user_add(self, username, email, password):
-        self.session.add(User(username=username, email=email, password=password))
+        self.session.add(User(username=username, email=email, password=self.password_crypter(password)))
         try:
             self.session.commit()
             return True
@@ -56,7 +61,7 @@ class DBWork:
 
 
     def user_login(self, email, password):
-        user = self.session.query(User).filter(User.email==email, User.password==password).all()
+        user = self.session.query(User).filter(User.email==email, User.password==self.password_crypter(password)).all()
         if user:
             return True
         else:
@@ -66,6 +71,15 @@ class DBWork:
         user = self.session.query(User).filter(User.email==email).first()
         if user:
             return user.username
+        else:
+            return False
+
+    def change_user_password(self, id, password):
+        user = self.session.query(User).filter(User.id==id).first()
+        if user:
+            user.password = password
+            self.commit()
+            return True
         else:
             return False
 

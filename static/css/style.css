@@ -4,7 +4,7 @@
     top: 65%;
     left: 50%;
     transform: translate(-50%, -50%) scale(110%);
-    background: #A6E3DC;
+    background: #fff;
 }
 
 .SubmitButt:hover {
@@ -13,11 +13,12 @@
     top: 65%;
     left: 50%;
     transform: translate(-50%, -50%) scale(110%);
-    background: #5F958F;
+    background: #7a7a7a;
+    cursor: pointer;
 }
 
 .SignIn {
-    background: #A6E3DC;
+    background: #fff;
     border-radius: 20px;
     font-family: "Ubuntu";
     vertical-align: middle;
@@ -27,7 +28,7 @@
     top: 55%;
     left: 50%;
     transform: translate(-50%, -50%) scale(110%);
-    box-shadow: 4px 4px 15px 1px black;
+    box-shadow: 4px 4px 0px 0px gray;
     width: 238px;
     height: 110px;
 }
@@ -38,7 +39,6 @@
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-shadow: 2px 4px 2px #b0b0b0, 0 0 1em black;
 }
 
 .Message {
@@ -68,8 +68,8 @@
 }
 
 body {
-    background: #66c6bb;
-    background-image: url(/static/img/background.jpg);
+    background: #fafbfd;
+    background-image: url(/static/img/background.png);
     background-repeat: no-repeat;
     background-position: -10vh 20vh;
 }

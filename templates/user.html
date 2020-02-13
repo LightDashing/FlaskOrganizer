@@ -5,31 +5,33 @@
     <title>User</title>
     <link type="text/css" rel="stylesheet" href="/static/css/userpage.css">
 </head>
-<body>
+<body scroll="yes">
 {% if name != session['username'] %}
 <p>Sorry, seems like somthing go wrong</p>
 <a href={{url_for('index')}}>Home</a>
 {% else %}
-<center><h1><font size="250" color="#873eeb">Привет {{name|title}}!</font></h1></center>
+<center><h1 style="font-family: Rubik, sans-serif; size: 200%">Привет, {{name|title}}!</h1></center>
 <div class="Logout"><a href={{url_for('logout')}}>Log out</a></div>
-<div class="TasksWrapper">
-    {% for task in tasks %}
-    <div class="Card">
-        <div class="Card-Img"></div>
-        <div class="Card-Title">{{ task.title }}</div>
-        <div class="Card-Details">{{task.description}}</div>
-        <div class="Card-Start">Created: {{ task.start_date }}</div>
-        {% if task.end_date %}
-        <div class="Card-End">Deadline: {{ task.end_date }}</div>
-        {% endif %}
-        <div class="Card-Buttons">
-            <a href={{"/delete/task_" + loop.index|string}}><img src="/static/img/delete.png"
-                                                                 style="width: 1vw; height: 2vh;"></a>
-            <a href={{"/complete/task_" + loop.index|string}}><img src="/static/img/status.png"
-                                                                   style="width: 1vw; height: 2vh;"></a>
+<div class="Separator">
+    <div class="TasksWrapper">
+        {% for task in tasks %}
+        <div class="Card">
+            <div class="Card-Img"></div>
+            <div class="Card-Title">{{ task.title }}</div>
+            <div class="Card-Details">{{task.description}}</div>
+            <div class="Card-Start">Created: {{ task.start_date }}</div>
+            {% if task.end_date %}
+            <div class="Card-End">Deadline: {{ task.end_date }}</div>
+            {% endif %}
+            <div class="Card-Buttons">
+                <a href={{"/delete/task_" + loop.index|string}}><img src="/static/img/delete.png"
+                                                                     style="width: 1vw; height: 2vh;"></a>
+                <a href={{"/complete/task_" + loop.index|string}}><img src="/static/img/status.png"
+                                                                       style="width: 1vw; height: 2vh;"></a>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 <form method="POST">
     <div class="CreateTask">
